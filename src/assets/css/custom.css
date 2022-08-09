@@ -1,0 +1,29 @@
+.active {
+    background: #F0F5FF;
+    border-bottom-style: solid;
+    border-bottom-width: thick;
+    border-color: #0000FF;
+}
+
+.border-bottom {
+    border-bottom-style: solid;
+    border-bottom-width: 2;
+    border-color: #cacfd5;
+}
+
+.border-right {
+    border-right-style: solid;
+    border-right-width: 2;
+    border-color: #cacfd5;
+}
+
+.border-full {
+    border-style: solid;
+    border-width: 2;
+    border-color: #cacfd5;
+    border-radius: 4px;
+}
+
+.btn-purple {
+    background-color: #526CFE;
+}
