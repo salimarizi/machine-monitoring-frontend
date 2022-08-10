@@ -7,6 +7,7 @@ import normal_wave from '../assets/images/normal_wave.svg';
 import normal_spectogram from '../assets/images/normal_spectogram.svg';
 import { useEffect, useState } from 'react';
 import axios from '../util/Api';
+import { BASE_URL } from "../constants"
 
 function AlertDetail(props) {
   const [reasons, setReasons] = useState([])
@@ -44,20 +45,30 @@ function AlertDetail(props) {
       <div className='row'>
         <div className='col-md-6'>
           Anomaly Machine Output <br/>
-          {/* <audio controls>
-            <source src={audio} type="audio/wav"/>
-          </audio> */}
+          {
+            props.anomaly && <audio controls>
+              <source src={BASE_URL + 'static/' + props.anomaly.sound_clip} type="audio/wav"/>
+            </audio>
+          }
           <br/><br/>
-          <img src={anomaly_wave}/>
+          <img 
+            className="img img-fluid" 
+            src={props.anomaly ? BASE_URL + 'static/' + props.anomaly.wave : anomaly_wave}
+            />
           <br/><br/>
-          <img src={anomaly_spectogram}/>
+          <img 
+            className="img img-fluid" 
+            src={props.anomaly ? BASE_URL + 'static/' + props.anomaly.spectogram : anomaly_spectogram}
+            />
           <br/><br/>
         </div>
         <div className='col-md-6'>
           Normal Machine Output
-          {/* <audio controls>
-            <source src={audio} type="audio/wav"/>
-          </audio> */}
+          {
+            props.anomaly && <audio controls>
+              <source src={BASE_URL + 'static/' + props.anomaly.sound_clip} type="audio/wav"/>
+            </audio>
+          }
           <br/><br/>
           <img src={normal_wave}/>
           <br/><br/>
