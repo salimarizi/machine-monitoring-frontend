@@ -81,7 +81,7 @@ function AlertDetail(props) {
             <option>Unknown Anomally</option>
             {
               reasons.map(item => (
-                <option value={item}>{item.reason}</option>
+                <option value={item._id}>{item.reason}</option>
               ))
             }
           </select>
@@ -97,7 +97,7 @@ function AlertDetail(props) {
             <option>Select Action</option>
             {
               actions.map(item => (
-                <option value={item}>{item.name}</option>
+                <option value={item._id}>{item.name}</option>
               ))
             }
           </select>
@@ -114,10 +114,13 @@ function AlertDetail(props) {
       <button 
         className='btn btn-purple text-white'
         onClick={async() => {
+          let [selectedActionObj] = actions.filter(item => item._id == selectedAction)
+          let [selectedReasonObj] = reasons.filter(item => item._id == selectedReason)
+          
           await axios.patch('api/anomalies/', {
                 "_id": props.anomaly._id,
-                "action": JSON.stringify(selectedAction),
-                "reason": JSON.stringify(selectedReason),
+                "action": selectedActionObj,
+                "reason": selectedReasonObj,
                 "timestamp": props.anomaly.timestamp,
                 "machine": props.anomaly.machine,
                 "anomaly": props.anomaly.anomaly,
