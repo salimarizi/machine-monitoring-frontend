@@ -20,7 +20,7 @@ function AlertItem(props) {
                 {props.anomaly}
               </span>
             :
-              <span className="badge badge-pill badge-red text-white">
+              <span className="badge badge-pill badge-danger text-white">
                 {props.anomaly}
               </span>
           } 
