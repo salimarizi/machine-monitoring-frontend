@@ -1,6 +1,6 @@
 import '../assets/css/styles.css';
 import '../assets/css/custom.css';
-import audio from '../assets/audios/1.wav';
+// import audio from '../assets/audios/1.wav';
 import anomaly_wave from '../assets/images/anomaly_wave.svg';
 import anomaly_spectogram from '../assets/images/anomaly_spectogram.svg';
 import normal_wave from '../assets/images/normal_wave.svg';
@@ -15,9 +15,9 @@ function AlertDetail() {
       <div className='row'>
         <div className='col-md-6'>
           Anomaly Machine Output <br/>
-          <audio controls>
+          {/* <audio controls>
             <source src={audio} type="audio/wav"/>
-          </audio>
+          </audio> */}
           <br/><br/>
           <img src={anomaly_wave}/>
           <br/><br/>
@@ -26,9 +26,9 @@ function AlertDetail() {
         </div>
         <div className='col-md-6'>
           Normal Machine Output
-          <audio controls>
+          {/* <audio controls>
             <source src={audio} type="audio/wav"/>
-          </audio>
+          </audio> */}
           <br/><br/>
           <img src={normal_wave}/>
           <br/><br/>
