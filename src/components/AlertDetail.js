@@ -16,11 +16,12 @@ function AlertDetail(props) {
   const [selectedReason, setSelectedReason] = useState(null)
   const [selectedAction, setSelectedAction] = useState(null)
   const [comments, setComments] = useState('')
+  const [startEdit, seetStartEdit] = useState(false)
 
   const getAllReasons = async() => {
     await axios.get('api/reasons/')
     .then(({data}) => {
-      data = data.filter(item => item.machine_name == props.anomaly.machine)
+      // data = data.filter(item => item.machine_name == props.anomaly.machine)
       setReasons(data)
     })
   }
@@ -36,6 +37,11 @@ function AlertDetail(props) {
     getAllReasons()
     getAllActions()
   }, [])
+
+  useEffect(() => {
+    seetStartEdit(true)
+    console.log('ngedit');
+  }, [selectedAction, selectedReason, comments])
 
   return (
     <>
@@ -91,9 +97,11 @@ function AlertDetail(props) {
             onChange={(e) => setSelectedReason(e.target.value)}>
             <option>Unknown Anomally</option>
             {
-              reasons.map(item => (
-                <option value={item._id}>{item.reason}</option>
-              ))
+              reasons.map(item => {
+                if (item.machine_name == props.anomaly?.machine) {
+                  return <option value={item._id}>{item.reason}</option>
+                }
+              })
             }
           </select>
         </div>
