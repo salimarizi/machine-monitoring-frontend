@@ -16,7 +16,7 @@ function AlertDetail(props) {
   const [selectedReason, setSelectedReason] = useState(null)
   const [selectedAction, setSelectedAction] = useState(null)
   const [comments, setComments] = useState('')
-  const [startEdit, seetStartEdit] = useState(false)
+  const [startEdit, setStartEdit] = useState(false)
 
   const getAllReasons = async() => {
     await axios.get('api/reasons/')
@@ -37,11 +37,6 @@ function AlertDetail(props) {
     getAllReasons()
     getAllActions()
   }, [])
-
-  useEffect(() => {
-    seetStartEdit(true)
-    console.log('ngedit');
-  }, [selectedAction, selectedReason, comments])
 
   return (
     <>
@@ -92,67 +87,96 @@ function AlertDetail(props) {
       <div className='row'>
         <div className='col-md-4'>
           <b>Suspected Reason</b><br/>
-          <select 
-            className='form-control'
-            onChange={(e) => setSelectedReason(e.target.value)}>
-            <option>Unknown Anomally</option>
-            {
-              reasons.map(item => {
-                if (item.machine_name == props.anomaly?.machine) {
-                  return <option value={item._id}>{item.reason}</option>
-                }
-              })
-            }
-          </select>
+          {
+            props.anomaly?.reason != null && !startEdit ? 
+            props.anomaly?.reason?.reason
+            : 
+            <select 
+              className='form-control'
+              onChange={(e) => setSelectedReason(e.target.value)}>
+              <option>Unknown Anomally</option>
+              {
+                reasons.map(item => {
+                  if (item.machine_name == props.anomaly?.machine) {
+                    return <option value={item._id}>{item.reason}</option>
+                  }
+                })
+              }
+            </select>
+          }
         </div>
       </div>
       <br/>
       <div className='row'>
         <div className='col-md-4'>
           <b>Action Required</b><br/>
-          <select 
-            className='form-control'
-            onChange={(e) => setSelectedAction(e.target.value)}>
-            <option>Select Action</option>
-            {
-              actions.map(item => (
-                <option value={item._id}>{item.name}</option>
-              ))
-            }
-          </select>
+          {
+            props.anomaly?.action != null && !startEdit ? 
+            props.anomaly?.action?.name
+            : 
+            <select 
+              className='form-control'
+              onChange={(e) => setSelectedAction(e.target.value)}>
+              <option>Select Action</option>
+              {
+                actions.map(item => (
+                  <option value={item._id}>{item.name}</option>
+                ))
+              }
+            </select>
+          }
         </div>
       </div>
       <br/>
       <div className='row'>
         <div className='col-md-8'>
           <b>Comments</b><br/>
-          <textarea className='form-control' onChange={(e) => setComments(e.target.value)} rows={4}/>
+          {
+            props.anomaly?.action != null && !startEdit ? 
+            props.anomaly?.comments 
+            :
+            <textarea 
+              className='form-control'
+              rows={4}
+              onChange={(e) => setComments(e.target.value)}/>
+          }
         </div>
       </div>
       <br/>
-      <button 
-        className='btn btn-purple text-white'
-        onClick={async() => {
-          let [selectedActionObj] = actions.filter(item => item._id === selectedAction)
-          let [selectedReasonObj] = reasons.filter(item => item._id === selectedReason)
+      {
+        props.anomaly?.action != null && !startEdit  ? 
+        <button
+          className='btn btn-success text-white'
+          onClick={() => {
+            setStartEdit(true)
+          }}>
+            Edit Response
+        </button>
+        :
+        <button 
+          className='btn btn-purple text-white'
+          onClick={async() => {
+            let [selectedActionObj] = actions.filter(item => item._id === selectedAction)
+            let [selectedReasonObj] = reasons.filter(item => item._id === selectedReason)
 
-          await axios.patch('api/anomalies/', {
-                "_id": props.anomaly._id,
-                "action": selectedActionObj,
-                "reason": selectedReasonObj,
-                "timestamp": props.anomaly.timestamp,
-                "machine": props.anomaly.machine,
-                "anomaly": props.anomaly.anomaly,
-                "sensor": props.anomaly.sensor,
-                "sound_clip": props.anomaly.sensor_clip,
-                "comments": comments
-          })
-          .then(({data}) => {
-            console.log(data);
-          })
-        }}>
-        Update
-      </button>
+            await axios.patch('api/anomalies/', {
+                  "_id": props.anomaly._id,
+                  "action": selectedActionObj,
+                  "reason": selectedReasonObj,
+                  "timestamp": props.anomaly.timestamp,
+                  "machine": props.anomaly.machine,
+                  "anomaly": props.anomaly.anomaly,
+                  "sensor": props.anomaly.sensor,
+                  "sound_clip": props.anomaly.sensor_clip,
+                  "comments": comments
+            })
+            .then(({data}) => {
+              console.log(data);
+            })
+          }}>
+          Update
+        </button>
+      }
     </>
   );
 }
