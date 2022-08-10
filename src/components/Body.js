@@ -5,20 +5,22 @@ import AlertItem from './AlertItem';
 import AlertDetail from './AlertDetail';
 
 import axios from '../util/Api';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 function Body() {
+  const [anomalies, setAnomalies] = useState([])
+  const [selectedAnomaly, setSelectedAnomaly] = useState(null)
+
   const getAllAnomalies = async() => {
     await axios.get('api/anomalies/')
     .then(({data}) => {
-      console.log('salim');
-      console.log(data);
+      setAnomalies(data)
     })
   }
   
   useEffect(() => {
     getAllAnomalies()
-  })
+  }, [])
 
   return (
     <div className="App">
@@ -47,23 +49,31 @@ function Body() {
                   </div>
                   <div className='row border-bottom'>
                     <div className='col-md-12'>
-                        <small>6 Alerts</small> &nbsp;
+                        <small>{anomalies.length} Alerts</small> &nbsp;
                         <span className="badge badge-pill badge-primary">
                           2 news
                         </span>
                     </div>
                   </div>
                   <div className='row'>
-                    <AlertItem/>
-                    <AlertItem/>
-                    <AlertItem/>
-                    <AlertItem/>
-                    <AlertItem/>
-                    <AlertItem/>
+                    {
+                      anomalies?.map((item, index) => (
+                        <AlertItem
+                          key={index}
+                          id={item._id}
+                          detected_at={item.timestamp}
+                          anomaly={item.anomaly}
+                          machine={item.machine}
+                          onClickDiv={() => {
+                            setSelectedAnomaly(item)
+                          }}
+                        />
+                      ))
+                    }
                   </div>
                 </div>
                 <div className='col-md-9'>
-                    <AlertDetail/>
+                    <AlertDetail anomaly={selectedAnomaly}/>
                 </div>
               </div>
             </div>
