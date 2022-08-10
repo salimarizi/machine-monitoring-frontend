@@ -114,9 +114,9 @@ function AlertDetail(props) {
       <button 
         className='btn btn-purple text-white'
         onClick={async() => {
-          let [selectedActionObj] = actions.filter(item => item._id == selectedAction)
-          let [selectedReasonObj] = reasons.filter(item => item._id == selectedReason)
-          
+          let [selectedActionObj] = actions.filter(item => item._id === selectedAction)
+          let [selectedReasonObj] = reasons.filter(item => item._id === selectedReason)
+
           await axios.patch('api/anomalies/', {
                 "_id": props.anomaly._id,
                 "action": selectedActionObj,
