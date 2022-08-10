@@ -4,7 +4,22 @@ import '../assets/fontawesome/css/all.min.css';
 import AlertItem from './AlertItem';
 import AlertDetail from './AlertDetail';
 
+import axios from '../util/Api';
+import { useEffect } from 'react';
+
 function Body() {
+  const getAllAnomalies = async() => {
+    await axios.get('api/anomalies/')
+    .then(({data}) => {
+      console.log('salim');
+      console.log(data);
+    })
+  }
+  
+  useEffect(() => {
+    getAllAnomalies()
+  })
+
   return (
     <div className="App">
       <br/>
@@ -15,6 +30,7 @@ function Body() {
               <div className='col-md-2'>
                 <select className='form-control'>
                   <option>CNC Machine</option>
+                  <option>Milling Machine</option>
                 </select>
               </div>
             </div>
