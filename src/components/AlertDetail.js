@@ -1,6 +1,5 @@
 import '../assets/css/styles.css';
 import '../assets/css/custom.css';
-// import audio from '../assets/audios/1.wav';
 import anomaly_wave from '../assets/images/anomaly_wave.svg';
 import anomaly_spectogram from '../assets/images/anomaly_spectogram.svg';
 import normal_wave from '../assets/images/normal_wave.svg';

@@ -1,6 +1,6 @@
 import '../assets/css/styles.css';
 import '../assets/css/custom.css';
-import '../assets/fontawesome/css/all.min.css';
+// import '../assets/fontawesome/css/all.min.css';
 import AlertItem from './AlertItem';
 import AlertDetail from './AlertDetail';
 

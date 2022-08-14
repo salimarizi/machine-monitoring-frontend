@@ -1,6 +1,6 @@
 import '../assets/css/styles.css';
 import '../assets/css/custom.css';
-import '../assets/fontawesome/css/all.min.css';
+// import '../assets/fontawesome/css/all.min.css';
 import logo from '../assets/images/logo.svg';
 
 function Header() {
